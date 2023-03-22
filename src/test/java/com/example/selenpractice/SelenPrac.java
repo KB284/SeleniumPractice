@@ -186,6 +186,8 @@ public class SelenPrac {
 
         // Display the size of the list
         System.out.println("Total number of web elements on the page: " + allElements.size());
+        System.out.println("Height of webpage is: "+height);
+        System.out.println("Width of webpage is: "+width);
 
         for (WebElement i : allElements){
             String str = i.getText();
