@@ -3,8 +3,10 @@ package com.example.selenpractice;
 import java.lang.Thread;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +27,7 @@ public class SelenPrac {
 
         // Navigate to the URL
         driver.get("http://www.tutorialsninja.com/demo/");
-        //driver.manage().window().maximize();
+        driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         // Find the "Phones & PDAs" category and click on it
@@ -130,10 +132,38 @@ public class SelenPrac {
         }
 
 //--------------------------------------------------------------------------------------------
+//Drag and Drop
+
+        driver.get("https://demoqa.com/droppable/");
+        try {
+            Thread.sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+        // find source element
+        WebElement sourceElement = driver.findElement(By.id("draggable"));
+
+        // find target element
+        WebElement targetElement = driver.findElement(By.id("droppable"));
+
+        // create Actions object
+        Actions actions = new Actions(driver);
+
+        // perform drag and drop action
+        actions.dragAndDrop(sourceElement, targetElement).build().perform();
+
+        try{
+            Thread.sleep(3000);
+        } catch (InterruptedException e){
+            throw new RuntimeException(e);
+        }
+
+//--------------------------------------------------------------------------------------------
 //get title and current url of the website
 
         // Get the title and current URL
-        driver.get("https://www.hackerone.com");
+        driver.get("https://phptravels.com/demo/");
 
         String title = driver.getTitle();
         String url = driver.getCurrentUrl();
@@ -142,14 +172,26 @@ public class SelenPrac {
         System.out.println("Title: " + title);
         System.out.println("Current URL: " + url);
 
+
 //-----------------------------------------------------------------------------------------------------
 //List the size and display the number of web elements present in the current webpage
 
-        // Find all web elements on the page
+        // Find all web elements on the page and display size
         List<WebElement> allElements = driver.findElements(By.xpath("//*"));
+        Dimension screenSize = driver.manage().window().getSize();
+
+
+        int height = screenSize.getHeight();
+        int width = screenSize.getWidth();
 
         // Display the size of the list
         System.out.println("Total number of web elements on the page: " + allElements.size());
+
+        for (WebElement i : allElements){
+            String str = i.getText();
+            if(!str.isEmpty())
+                System.out.println(i.getText());
+        }
 
         try {
             Thread.sleep(3000);
